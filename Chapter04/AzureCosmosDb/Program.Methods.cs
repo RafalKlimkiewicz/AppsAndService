@@ -1,4 +1,5 @@
 ﻿using System.Net; // To use HttpStatusCode.
+using AzureCosmosDb.Models;
 using DataContext;
 using Microsoft.Azure.Cosmos; // To use CosmosClient and so on.
 using Microsoft.Azure.Cosmos.Scripts; // To use StoredProcedureResponse and so on.
@@ -83,355 +84,341 @@ partial class Program
         }
     }
 
-    //    static async Task CreateProductItems()
-    //    {
-    //        SectionTitle("Creating product items");
+    static async Task CreateProductItems()
+    {
+        SectionTitle("Creating product items");
 
-    //        double totalCharge = 0.0;
+        double totalCharge = 0.0;
 
-    //        try
-    //        {
-    //            using (CosmosClient client = new(
-    //              accountEndpoint: endpointUri,
-    //              authKeyOrResourceToken: primaryKey))
-    //            {
-    //                Container container = client.GetContainer(
-    //                  databaseId: "Northwind", containerId: "Products");
+        try
+        {
+            using CosmosClient client = new(accountEndpoint: endpointUri, authKeyOrResourceToken: primaryKey);
 
-    //                using (NorthwindContext db = new())
-    //                {
-    //                    if (!db.Database.CanConnect())
-    //                    {
-    //                        WriteLine("Cannot connect to the SQL Server database to " +
-    //                          " read products using database connection string: " +
-    //                          db.Database.GetConnectionString());
-    //                        return;
-    //                    }
+            Container container = client.GetContainer(databaseId: "Northwind", containerId: "Products");
 
-    //                    ProductCosmos[] products = db.Products
+            using NorthwindContext db = new();
 
-    //                      // Get the related data for embedding.
-    //                      .Include(p => p.Category)
-    //                      .Include(p => p.Supplier)
+            if (!db.Database.CanConnect())
+            {
+                WriteLine("Cannot connect to the SQL Server database to " + " read products using database connection string: " +
+                    db.Database.GetConnectionString());
+                return;
+            }
 
-    //                      // Filter any products with null category or supplier
-    //                      // to avoid null warnings.
-    //                      .Where(p => (p.Category != null) && (p.Supplier != null))
+            ProductCosmos[] products = db.Products
+                // Get the related data for embedding.
+                .Include(p => p.Category)
+                .Include(p => p.Supplier)
+                // Filter any products with null category or supplier
+                // to avoid null warnings.
+                .Where(p => (p.Category != null) && (p.Supplier != null))
+                // Project the EF Core entities into Cosmos JSON types.
+                .Select(p => new ProductCosmos
+                {
+                    id = p.ProductId.ToString(),
+                    productId = p.ProductId.ToString(),
+                    productName = p.ProductName,
+                    quantityPerUnit = p.QuantityPerUnit,
+                    // If the related category is null, store null,
+                    // else store the category mapped to Cosmos model.
+                    category = p.Category == null ? null : new CategoryCosmos
+                    {
+                        categoryId = p.Category.CategoryId,
+                        categoryName = p.Category.CategoryName,
+                        description = p.Category.Description
+                    },
+                    supplier = p.Supplier == null ? null : new SupplierCosmos
+                    {
+                        supplierId = p.Supplier.SupplierId,
+                        companyName = p.Supplier.CompanyName,
+                        contactName = p.Supplier.ContactName,
+                        contactTitle = p.Supplier.ContactTitle,
+                        address = p.Supplier.Address,
+                        city = p.Supplier.City,
+                        country = p.Supplier.Country,
+                        postalCode = p.Supplier.PostalCode,
+                        region = p.Supplier.Region,
+                        phone = p.Supplier.Phone,
+                        fax = p.Supplier.Fax,
+                        homePage = p.Supplier.HomePage
+                    },
 
-    //                      // Project the EF Core entities into Cosmos JSON types.
-    //                      .Select(p => new ProductCosmos
-    //                      {
-    //                          id = p.ProductId.ToString(),
-    //                          productId = p.ProductId.ToString(),
-    //                          productName = p.ProductName,
-    //                          quantityPerUnit = p.QuantityPerUnit,
+                    unitPrice = p.UnitPrice,
+                    unitsInStock = p.UnitsInStock,
+                    reorderLevel = p.ReorderLevel,
+                    unitsOnOrder = p.UnitsOnOrder,
+                    discontinued = p.Discontinued,
+                })
+                .ToArray();
 
-    //                          // If the related category is null, store null,
-    //                          // else store the category mapped to Cosmos model.
-    //                          category = p.Category == null ? null :
-    //                          new CategoryCosmos
-    //                          {
-    //                              categoryId = p.Category.CategoryId,
-    //                              categoryName = p.Category.CategoryName,
-    //                              description = p.Category.Description
-    //                          },
+            foreach (ProductCosmos product in products)
+            {
+                try
+                {
+                    // Try to read the item to see if it exists.
+                    ItemResponse<ProductCosmos> productResponse = await container.ReadItemAsync<ProductCosmos>(id: product.id, new PartitionKey(product.productId));
 
-    //                          supplier = p.Supplier == null ? null :
-    //                          new SupplierCosmos
-    //                          {
-    //                              supplierId = p.Supplier.SupplierId,
-    //                              companyName = p.Supplier.CompanyName,
-    //                              contactName = p.Supplier.ContactName,
-    //                              contactTitle = p.Supplier.ContactTitle,
-    //                              address = p.Supplier.Address,
-    //                              city = p.Supplier.City,
-    //                              country = p.Supplier.Country,
-    //                              postalCode = p.Supplier.PostalCode,
-    //                              region = p.Supplier.Region,
-    //                              phone = p.Supplier.Phone,
-    //                              fax = p.Supplier.Fax,
-    //                              homePage = p.Supplier.HomePage
-    //                          },
+                    WriteLine("Item with id: {0} exists. Query consumed {1} RUs.", productResponse.Resource.id, productResponse.RequestCharge);
 
-    //                          unitPrice = p.UnitPrice,
-    //                          unitsInStock = p.UnitsInStock,
-    //                          reorderLevel = p.ReorderLevel,
-    //                          unitsOnOrder = p.UnitsOnOrder,
-    //                          discontinued = p.Discontinued,
-    //                      })
-    //                      .ToArray();
+                    totalCharge += productResponse.RequestCharge;
+                }
+                catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // Create the item if it does not exist.
+                    ItemResponse<ProductCosmos> productResponse = await container.CreateItemAsync(product);
 
-    //                    foreach (ProductCosmos product in products)
-    //                    {
-    //                        try
-    //                        {
-    //                            // Try to read the item to see if it exists.
-    //                            ItemResponse<ProductCosmos> productResponse =
-    //                              await container.ReadItemAsync<ProductCosmos>(
-    //                              id: product.id, new PartitionKey(product.productId));
+                    WriteLine("Created item with id: {0}. Insert consumed {1} RUs.", productResponse.Resource.id, productResponse.RequestCharge);
 
-    //                            WriteLine("Item with id: {0} exists. Query consumed {1} RUs.",
-    //                              productResponse.Resource.id, productResponse.RequestCharge);
+                    totalCharge += productResponse.RequestCharge;
+                }
+                catch (Exception ex)
+                {
+                    WriteLine("Error: {0} says {1}", arg0: ex.GetType(), arg1: ex.Message);
+                }
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            WriteLine($"Error: {ex.Message}");
+            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0} says {1}",
+              arg0: ex.GetType(),
+              arg1: ex.Message);
+        }
 
-    //                            totalCharge += productResponse.RequestCharge;
-    //                        }
-    //                        catch (CosmosException ex)
-    //                          when (ex.StatusCode == HttpStatusCode.NotFound)
-    //                        {
-    //                            // Create the item if it does not exist.
-    //                            ItemResponse<ProductCosmos> productResponse =
-    //                              await container.CreateItemAsync(product);
+        WriteLine("Total requests charge: {0:N2} RUs", totalCharge);
+    }
 
-    //                            WriteLine("Created item with id: {0}. Insert consumed {1} RUs.",
-    //                              productResponse.Resource.id, productResponse.RequestCharge);
+    static async Task ListProductItems(string sqlText = "SELECT * FROM c")
+    {
+        SectionTitle("Listing product items");
 
-    //                            totalCharge += productResponse.RequestCharge;
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            WriteLine("Error: {0} says {1}",
-    //                              arg0: ex.GetType(),
-    //                              arg1: ex.Message);
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        catch (HttpRequestException ex)
-    //        {
-    //            WriteLine($"Error: {ex.Message}");
-    //            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            WriteLine("Error: {0} says {1}",
-    //              arg0: ex.GetType(),
-    //              arg1: ex.Message);
-    //        }
+        try
+        {
+            using (CosmosClient client = new(
+              accountEndpoint: endpointUri,
+              authKeyOrResourceToken: primaryKey))
+            {
+                Container container = client.GetContainer(
+                  databaseId: "Northwind", containerId: "Products");
 
-    //        WriteLine("Total requests charge: {0:N2} RUs", totalCharge);
-    //    }
+                WriteLine("Running query: {0}", sqlText);
 
-    //    static async Task ListProductItems(string sqlText = "SELECT * FROM c")
-    //    {
-    //        SectionTitle("Listing product items");
+                QueryDefinition query = new(sqlText);
 
-    //        try
-    //        {
-    //            using (CosmosClient client = new(
-    //              accountEndpoint: endpointUri,
-    //              authKeyOrResourceToken: primaryKey))
-    //            {
-    //                Container container = client.GetContainer(
-    //                  databaseId: "Northwind", containerId: "Products");
+                using FeedIterator<ProductCosmos> resultsIterator =
+                  container.GetItemQueryIterator<ProductCosmos>(query);
 
-    //                WriteLine("Running query: {0}", sqlText);
+                if (!resultsIterator.HasMoreResults)
+                {
+                    WriteLine("No results found.");
+                }
 
-    //                QueryDefinition query = new(sqlText);
+                while (resultsIterator.HasMoreResults)
+                {
+                    FeedResponse<ProductCosmos> products =
+                      await resultsIterator.ReadNextAsync();
 
-    //                using FeedIterator<ProductCosmos> resultsIterator =
-    //                  container.GetItemQueryIterator<ProductCosmos>(query);
+                    WriteLine("Status code: {0}, Request charge: {1} RUs.",
+                      products.StatusCode, products.RequestCharge);
 
-    //                if (!resultsIterator.HasMoreResults)
-    //                {
-    //                    WriteLine("No results found.");
-    //                }
+                    WriteLine($"{products.Count} products found.");
 
-    //                while (resultsIterator.HasMoreResults)
-    //                {
-    //                    FeedResponse<ProductCosmos> products =
-    //                      await resultsIterator.ReadNextAsync();
+                    foreach (ProductCosmos product in products)
+                    {
+                        WriteLine("id: {0}, productName: {1}, unitPrice: {2:C}",
+                          arg0: product.id, arg1: product.productName,
+                          arg2: product.unitPrice.ToString());
+                    }
+                }
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            WriteLine($"Error: {ex.Message}");
+            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0} says {1}",
+              arg0: ex.GetType(),
+              arg1: ex.Message);
+        }
+    }
 
-    //                    WriteLine("Status code: {0}, Request charge: {1} RUs.",
-    //                      products.StatusCode, products.RequestCharge);
+    static async Task DeleteProductItems()
+    {
+        SectionTitle("Deleting product items");
 
-    //                    WriteLine($"{products.Count} products found.");
+        double totalCharge = 0.0;
 
-    //                    foreach (ProductCosmos product in products)
-    //                    {
-    //                        WriteLine("id: {0}, productName: {1}, unitPrice: {2:C}",
-    //                          arg0: product.id, arg1: product.productName,
-    //                          arg2: product.unitPrice.ToString());
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        catch (HttpRequestException ex)
-    //        {
-    //            WriteLine($"Error: {ex.Message}");
-    //            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            WriteLine("Error: {0} says {1}",
-    //              arg0: ex.GetType(),
-    //              arg1: ex.Message);
-    //        }
-    //    }
+        try
+        {
+            using CosmosClient client = new(accountEndpoint: endpointUri, authKeyOrResourceToken: primaryKey);
 
-    //    static async Task DeleteProductItems()
-    //    {
-    //        SectionTitle("Deleting product items");
+            Container container = client.GetContainer(databaseId: "Northwind", containerId: "Products");
 
-    //        double totalCharge = 0.0;
+            string sqlText = "SELECT * FROM c";
 
-    //        try
-    //        {
-    //            using (CosmosClient client = new(
-    //              accountEndpoint: endpointUri,
-    //              authKeyOrResourceToken: primaryKey))
-    //            {
-    //                Container container = client.GetContainer(
-    //                  databaseId: "Northwind", containerId: "Products");
+            WriteLine("Running query: {0}", sqlText);
 
-    //                string sqlText = "SELECT * FROM c";
+            QueryDefinition query = new(sqlText);
 
-    //                WriteLine("Running query: {0}", sqlText);
+            using FeedIterator<ProductCosmos> resultsIterator = container.GetItemQueryIterator<ProductCosmos>(query);
 
-    //                QueryDefinition query = new(sqlText);
+            while (resultsIterator.HasMoreResults)
+            {
+                FeedResponse<ProductCosmos> products = await resultsIterator.ReadNextAsync();
 
-    //                using FeedIterator<ProductCosmos> resultsIterator =
-    //                  container.GetItemQueryIterator<ProductCosmos>(query);
+                foreach (ProductCosmos product in products)
+                {
+                    WriteLine("Delete id: {0}, productName: {1}", arg0: product.id, arg1: product.productName);
 
-    //                while (resultsIterator.HasMoreResults)
-    //                {
-    //                    FeedResponse<ProductCosmos> products =
-    //                      await resultsIterator.ReadNextAsync();
+                    ItemResponse<ProductCosmos> response = await container.DeleteItemAsync<ProductCosmos>(id: product.id, partitionKey: new(product.id));
 
-    //                    foreach (ProductCosmos product in products)
-    //                    {
-    //                        WriteLine("Delete id: {0}, productName: {1}",
-    //                          arg0: product.id, arg1: product.productName);
+                    WriteLine("Status code: {0}, Request charge: {1} RUs.", response.StatusCode, response.RequestCharge);
 
-    //                        ItemResponse<ProductCosmos> response =
-    //                          await container.DeleteItemAsync<ProductCosmos>(
-    //                          id: product.id, partitionKey: new(product.id));
+                    totalCharge += response.RequestCharge;
+                }
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            WriteLine($"Error: {ex.Message}");
+            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0} says {1}",
+              arg0: ex.GetType(),
+              arg1: ex.Message);
+        }
 
-    //                        WriteLine("Status code: {0}, Request charge: {1} RUs.",
-    //                          response.StatusCode, response.RequestCharge);
+        WriteLine("Total requests charge: {0:N2} RUs", totalCharge);
+    }
 
-    //                        totalCharge += response.RequestCharge;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        catch (HttpRequestException ex)
-    //        {
-    //            WriteLine($"Error: {ex.Message}");
-    //            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            WriteLine("Error: {0} says {1}",
-    //              arg0: ex.GetType(),
-    //              arg1: ex.Message);
-    //        }
+    static async Task CreateInsertProductStoredProcedure()
+    {
+        SectionTitle("Creating the insertProduct stored procedure");
 
-    //        WriteLine("Total requests charge: {0:N2} RUs", totalCharge);
-    //    }
+        try
+        {
+            using CosmosClient client = new(accountEndpoint: endpointUri, authKeyOrResourceToken: primaryKey);
 
-    //    static async Task CreateInsertProductStoredProcedure()
-    //    {
-    //        SectionTitle("Creating the insertProduct stored procedure");
+            Container container = client.GetContainer(databaseId: "Northwind", containerId: "Products");
 
-    //        try
-    //        {
-    //            using (CosmosClient client = new(
-    //              accountEndpoint: endpointUri,
-    //              authKeyOrResourceToken: primaryKey))
-    //            {
-    //                Container container = client.GetContainer(
-    //                  databaseId: "Northwind", containerId: "Products");
+            StoredProcedureResponse response = await container.Scripts.CreateStoredProcedureAsync(new StoredProcedureProperties
+            {
+                Id = "insertProduct",
+                Body = """
+                function insertProduct(product) {
+                  if (!product) throw new Error("product is undefined or null.");
 
-    //                StoredProcedureResponse response = await container
-    //                  .Scripts.CreateStoredProcedureAsync(new StoredProcedureProperties
-    //                  {
-    //                      Id = "insertProduct",
-    //                      Body = """
-    //function insertProduct(product) {
-    //  if (!product) throw new Error(
-    //    "product is undefined or null.");
+                  tryInsert(product, callbackInsert);
 
-    //  tryInsert(product, callbackInsert);
+                  function tryInsert(product, callbackFunction) {
+                    var options = { disableAutomaticIdGeneration: false };
 
-    //  function tryInsert(product, callbackFunction) {
-    //    var options = { disableAutomaticIdGeneration: false };
+                    // __ is an alias for getContext().getCollection()
+                    var isAccepted = __.createDocument(__.getSelfLink(), product, options, callbackFunction);
 
-    //    // __ is an alias for getContext().getCollection()
-    //    var isAccepted = __.createDocument(
-    //      __.getSelfLink(), product, options, callbackFunction);
+                    if (!isAccepted) 
+                      getContext().getResponse().setBody(0);
+                  }
 
-    //    if (!isAccepted) 
-    //      getContext().getResponse().setBody(0);
-    //  }
+                  function callbackInsert(err, item, options) {
+                    if (err)
+                        throw err;
+                    getContext().getResponse().setBody(1);
+                  }
+                }
+                """
+            });
 
-    //  function callbackInsert(err, item, options) {
-    //    if (err) throw err;
-    //    getContext().getResponse().setBody(1);
-    //  }
-    //}
-    //"""
-    //                  });
+            WriteLine("Status code: {0}, Request charge: {1} RUs.", response.StatusCode, response.RequestCharge);
+        }
+        catch (HttpRequestException ex)
+        {
+            WriteLine($"Error: {ex.Message}");
+            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0} says {1}",
+              arg0: ex.GetType(),
+              arg1: ex.Message);
+        }
+    }
 
-    //                WriteLine("Status code: {0}, Request charge: {1} RUs.",
-    //                  response.StatusCode, response.RequestCharge);
-    //            }
-    //        }
-    //        catch (HttpRequestException ex)
-    //        {
-    //            WriteLine($"Error: {ex.Message}");
-    //            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            WriteLine("Error: {0} says {1}",
-    //              arg0: ex.GetType(),
-    //              arg1: ex.Message);
-    //        }
-    //    }
+    static async Task ExecuteInsertProductStoredProcedure()
+    {
+        SectionTitle("Executing the insertProduct stored procedure");
 
-    //    static async Task ExecuteInsertProductStoredProcedure()
-    //    {
-    //        SectionTitle("Executing the insertProduct stored procedure");
+        try
+        {
+            using CosmosClient client = new(accountEndpoint: endpointUri, authKeyOrResourceToken: primaryKey);
 
-    //        try
-    //        {
-    //            using (CosmosClient client = new(
-    //              accountEndpoint: endpointUri,
-    //              authKeyOrResourceToken: primaryKey))
-    //            {
-    //                Container container = client.GetContainer(
-    //                  databaseId: "Northwind", containerId: "Products");
+            Container container = client.GetContainer(databaseId: "Northwind", containerId: "Products");
 
-    //                string pid = "78";
+            string pid = "78";
 
-    //                ProductCosmos product = new()
-    //                {
-    //                    id = pid,
-    //                    productId = pid,
-    //                    productName = "Barista's Chilli Jam",
-    //                    unitPrice = 12M,
-    //                    unitsInStock = 10
-    //                };
+            ProductCosmos product = new()
+            {
+                id = pid,
+                productId = pid,
+                productName = "Barista's Chilli Jam",
+                unitPrice = 12M,
+                unitsInStock = 10
+            };
 
-    //                StoredProcedureExecuteResponse<string> response = await container.Scripts
-    //                  .ExecuteStoredProcedureAsync<string>("insertProduct",
-    //                  new PartitionKey(pid), new[] { product });
+            StoredProcedureExecuteResponse<string> response = await container.Scripts.ExecuteStoredProcedureAsync<string>("insertProduct", new PartitionKey(pid), new[] { product });
 
-    //                WriteLine("Status code: {0}, Request charge: {1} RUs.",
-    //                  response.StatusCode, response.RequestCharge);
-    //            }
-    //        }
-    //        catch (HttpRequestException ex)
-    //        {
-    //            WriteLine($"Error: {ex.Message}");
-    //            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            WriteLine("Error: {0} says {1}",
-    //              arg0: ex.GetType(),
-    //              arg1: ex.Message);
-    //        }
-    //    }
+            WriteLine("Status code: {0}, Request charge: {1} RUs.", response.StatusCode, response.RequestCharge);
+        }
+        catch (HttpRequestException ex)
+        {
+            WriteLine($"Error: {ex.Message}");
+            WriteLine("Hint: If you are using the Azure Cosmos Emulator then please make sure it is running.");
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0} says {1}",
+              arg0: ex.GetType(),
+              arg1: ex.Message);
+        }
+    }
+    static async Task ExecuteCalculateTaxUDF(decimal unitPrice)
+    {
+        WriteLine("Executing UDF salesTax within a query...");
+
+        try
+        {
+            using CosmosClient client = new CosmosClient(endpointUri, primaryKey);
+
+            Container container = client.GetContainer("Northwind", "Products");
+
+            string queryText = "SELECT p.unitPrice cost, udf.salesTax(p.unitPrice) AS tax FROM Items p Where p.unitPrice > @unitPrice";
+
+            QueryDefinition queryDefinition = new QueryDefinition(queryText).WithParameter("@unitPrice", unitPrice);
+
+            FeedIterator<dynamic> queryResultSetIterator = container.GetItemQueryIterator<dynamic>(queryDefinition);
+
+            while (queryResultSetIterator.HasMoreResults)
+            {
+                FeedResponse<dynamic> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                foreach (var item in currentResultSet)
+                {
+                    Console.WriteLine("Calculated tax: {0} {1}", item.cost, item.tax);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLine("Error: {0}", ex.Message);
+        }
+    }
+
 }
