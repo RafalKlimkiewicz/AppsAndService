@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		commands.txt = commands.txt
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter03", "Chapter03\Chapter03\Chapter03.csproj", "{821C25CC-4CC5-D443-27F0-4C74654FF8C1}"
@@ -21,6 +22,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter04", "Chapter04", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCosmosDb", "Chapter04\AzureCosmosDb\AzureCosmosDb.csproj", "{473879D0-F769-4139-B837-45CC60908AAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter05", "Chapter05", "{250A0007-C64A-47DF-84E8-05D23C641BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithTasks", "Chapter05\WorkingWithTasks\WorkingWithTasks.csproj", "{61BBCF20-D813-4365-8F35-384548C0A198}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizationResourceAccess", "Chapter05\SynchronizationResourceAccess\SynchronizationResourceAccess.csproj", "{4619AC2E-234F-4095-BD6E-67306E477BC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,12 +59,22 @@ Global
 		{473879D0-F769-4139-B837-45CC60908AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{473879D0-F769-4139-B837-45CC60908AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{473879D0-F769-4139-B837-45CC60908AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BBCF20-D813-4365-8F35-384548C0A198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BBCF20-D813-4365-8F35-384548C0A198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BBCF20-D813-4365-8F35-384548C0A198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BBCF20-D813-4365-8F35-384548C0A198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{473879D0-F769-4139-B837-45CC60908AAF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{61BBCF20-D813-4365-8F35-384548C0A198} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
+		{4619AC2E-234F-4095-BD6E-67306E477BC9} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
