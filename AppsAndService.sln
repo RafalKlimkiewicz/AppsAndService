@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithTasks", "Chapter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizationResourceAccess", "Chapter05\SynchronizationResourceAccess\SynchronizationResourceAccess.csproj", "{4619AC2E-234F-4095-BD6E-67306E477BC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncConsole", "Chapter05\AsyncConsole\AsyncConsole.csproj", "{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEnumerable", "Chapter05\AsyncEnumerable\AsyncEnumerable.csproj", "{2E6C24A6-3167-437A-A834-BFD1356EB864}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,14 @@ Global
 		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4619AC2E-234F-4095-BD6E-67306E477BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +87,8 @@ Global
 		{473879D0-F769-4139-B837-45CC60908AAF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{61BBCF20-D813-4365-8F35-384548C0A198} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 		{4619AC2E-234F-4095-BD6E-67306E477BC9} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
+		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
+		{2E6C24A6-3167-437A-A834-BFD1356EB864} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
