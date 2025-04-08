@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncConsole", "Chapter05\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEnumerable", "Chapter05\AsyncEnumerable\AsyncEnumerable.csproj", "{2E6C24A6-3167-437A-A834-BFD1356EB864}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResponsive", "Chapter05\WpfResponsive\WpfResponsive.csproj", "{D95D5A81-1B7B-4025-9D69-06498E8D3B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E6C24A6-3167-437A-A834-BFD1356EB864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{4619AC2E-234F-4095-BD6E-67306E477BC9} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 		{2E6C24A6-3167-437A-A834-BFD1356EB864} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
+		{D95D5A81-1B7B-4025-9D69-06498E8D3B69} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
