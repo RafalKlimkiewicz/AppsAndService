@@ -35,6 +35,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEnumerable", "Chapter0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResponsive", "Chapter05\WpfResponsive\WpfResponsive.csproj", "{D95D5A81-1B7B-4025-9D69-06498E8D3B69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter06", "Chapter06", "{757ED027-693D-4A7F-A774-C0D50D460B4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithImages-ImageSharp", "Chapter06\WorkingWithImages-ImageSharp\WorkingWithImages-ImageSharp.csproj", "{786A1292-D301-482A-BAB5-9954F65FC8CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanizingData", "Chapter06\HumanizingData\HumanizingData.csproj", "{49A8B665-B261-4C20-BB24-84CE5CA0823D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +91,14 @@ Global
 		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D95D5A81-1B7B-4025-9D69-06498E8D3B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786A1292-D301-482A-BAB5-9954F65FC8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786A1292-D301-482A-BAB5-9954F65FC8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786A1292-D301-482A-BAB5-9954F65FC8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786A1292-D301-482A-BAB5-9954F65FC8CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A8B665-B261-4C20-BB24-84CE5CA0823D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A8B665-B261-4C20-BB24-84CE5CA0823D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A8B665-B261-4C20-BB24-84CE5CA0823D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A8B665-B261-4C20-BB24-84CE5CA0823D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +110,8 @@ Global
 		{A73559C1-7AA5-492D-B63E-9D8F0CB1B7C3} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 		{2E6C24A6-3167-437A-A834-BFD1356EB864} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
 		{D95D5A81-1B7B-4025-9D69-06498E8D3B69} = {250A0007-C64A-47DF-84E8-05D23C641BB4}
+		{786A1292-D301-482A-BAB5-9954F65FC8CF} = {757ED027-693D-4A7F-A774-C0D50D460B4F}
+		{49A8B665-B261-4C20-BB24-84CE5CA0823D} = {757ED027-693D-4A7F-A774-C0D50D460B4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
