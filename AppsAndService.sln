@@ -61,6 +61,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratingPdf.Document", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratingPdf.Console", "Chapter06\PDF\GeneratingPdf.Console\GeneratingPdf.Console.csproj", "{0FEE4B79-BD57-47D8-91F5-1E5E26806C54}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter07", "Chapter07", "{93C243A0-8C3B-4A67-BF88-6E52B06ED271}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithTime", "Chapter07\WorkingWithTime\WorkingWithTime.csproj", "{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +159,10 @@ Global
 		{0FEE4B79-BD57-47D8-91F5-1E5E26806C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEE4B79-BD57-47D8-91F5-1E5E26806C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEE4B79-BD57-47D8-91F5-1E5E26806C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,6 +186,7 @@ Global
 		{AA810530-FF92-4F22-B5E0-89A849EA9C5E} = {3497B5ED-B16C-4ECF-BFB0-CA6A6FB05784}
 		{174C57FA-07C8-45E0-BADC-077068BD71B4} = {3497B5ED-B16C-4ECF-BFB0-CA6A6FB05784}
 		{0FEE4B79-BD57-47D8-91F5-1E5E26806C54} = {3497B5ED-B16C-4ECF-BFB0-CA6A6FB05784}
+		{FDF5C14E-3CE5-4241-9AEB-3157AEDCEFFE} = {93C243A0-8C3B-4A67-BF88-6E52B06ED271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
