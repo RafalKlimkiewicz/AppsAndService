@@ -71,6 +71,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingWithTimeProvider", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithNodaTime", "Chapter07\WorkingWithNodaTime\WorkingWithNodaTime.csproj", "{E9120F20-4834-46D7-88D5-C0D05D663179}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter08", "Chapter08", "{734E6E08-CF5F-40B4-B9CC-69DE80290B29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.WebApi.Service", "Chapter08\Northwind.WebApi.Service\Northwind.WebApi.Service.csproj", "{A5A676CF-A82E-4C95-B237-F8C409EF75B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +185,10 @@ Global
 		{E9120F20-4834-46D7-88D5-C0D05D663179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9120F20-4834-46D7-88D5-C0D05D663179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9120F20-4834-46D7-88D5-C0D05D663179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5A676CF-A82E-4C95-B237-F8C409EF75B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A676CF-A82E-4C95-B237-F8C409EF75B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A676CF-A82E-4C95-B237-F8C409EF75B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A676CF-A82E-4C95-B237-F8C409EF75B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +216,7 @@ Global
 		{EC959A7D-3E49-4A87-B961-66BF98CBFAB0} = {93C243A0-8C3B-4A67-BF88-6E52B06ED271}
 		{E73112A3-FBF1-4A06-A6B1-87638CFAB19A} = {93C243A0-8C3B-4A67-BF88-6E52B06ED271}
 		{E9120F20-4834-46D7-88D5-C0D05D663179} = {93C243A0-8C3B-4A67-BF88-6E52B06ED271}
+		{A5A676CF-A82E-4C95-B237-F8C409EF75B3} = {734E6E08-CF5F-40B4-B9CC-69DE80290B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
