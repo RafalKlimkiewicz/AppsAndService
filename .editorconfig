@@ -194,3 +194,19 @@ dotnet_style_operator_placement_when_wrapping = beginning_of_line
 tab_width = 4
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
+
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = none
+
+[*.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
+
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+
+dotnet_naming_style.underscore_prefix.required_prefix = _
+dotnet_naming_style.underscore_prefix.capitalization = camel_case
+
+dotnet_naming_rule.private_fields_should_have_underscore_prefix.symbols = private_fields
+dotnet_naming_rule.private_fields_should_have_underscore_prefix.style = underscore_prefix
+dotnet_naming_rule.private_fields_should_have_underscore_prefix.severity = none
