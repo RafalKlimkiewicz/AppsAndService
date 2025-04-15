@@ -11,12 +11,12 @@ public partial class NorthwindContext
 
     public NorthwindContext(IConfiguration configuration)
     {
-        connectionString = configuration.GetConnectionString("Northwind") ?? throw new ArgumentNullException("Empty config.");
+        connectionString = configuration.GetConnectionString("Northwind") ?? "";
     }
 
     public NorthwindContext(DbContextOptions<NorthwindContext> options, IConfiguration configuration) : base(options)
     {
-        connectionString = configuration.GetConnectionString("Northwind") ?? throw new ArgumentNullException("Empty config.");
+        connectionString = configuration.GetConnectionString("Northwind") ?? "";
     }
 
     private static readonly SetLastRefreshedInterceptor SetLastRefreshedInterceptor = new();
