@@ -26,12 +26,13 @@ public class QueueWorker : BackgroundService, IAsyncDisposable
 
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        var factory = new ConnectionFactory
+        _factory = new ConnectionFactory
         {
             HostName = "localhost",
+            Port = 5672
         };
 
-        _connection = await factory.CreateConnectionAsync(cancellationToken);
+        _connection = await _factory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 
         await _channel.QueueDeclareAsync(queue: queueNameAndRoutingKey, durable: false, exclusive: false, autoDelete: false, arguments: null);
