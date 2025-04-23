@@ -35,7 +35,7 @@ public class QueueWorker : BackgroundService, IAsyncDisposable
         _connection = await _factory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 
-        await _channel.QueueDeclareAsync(queue: queueNameAndRoutingKey, durable: false, exclusive: false, autoDelete: false, arguments: null);
+        await _channel.QueueDeclareAsync(queue: queueNameAndRoutingKey, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
         _consumer = new AsyncEventingBasicConsumer(_channel);
         _consumer.ReceivedAsync += async (model, args) =>
@@ -45,11 +45,11 @@ public class QueueWorker : BackgroundService, IAsyncDisposable
 
             if (message != null)
             {
-                _logger.LogInformation($"Received product. Id: {message.Product.ProductId}, Name: {message.Product.ProductName}, Message: {message.Text}");
+                _logger.LogInformation($"QueueWorker Received product. Id: {message.Product.ProductId}, Name: {message.Product.ProductName}, Message: {message.Text}");
             }
             else
             {
-                _logger.LogInformation("Received unknown message.");
+                _logger.LogInformation("QueueWorker Received unknown message.");
             }
 
             await Task.CompletedTask;
@@ -64,7 +64,7 @@ public class QueueWorker : BackgroundService, IAsyncDisposable
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+            _logger.LogInformation("QueueWorker Worker running at: {time}", DateTimeOffset.Now);
 
             await Task.Delay(3000, stoppingToken);
         }
