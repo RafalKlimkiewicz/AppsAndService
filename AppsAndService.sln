@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		commands.txt = commands.txt
 		Directory.Build.props = Directory.Build.props
+		page.txt = page.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter03", "Chapter03\Chapter03\Chapter03.csproj", "{821C25CC-4CC5-D443-27F0-4C74654FF8C1}"
@@ -92,6 +93,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Background.Workers", "Chapter09\Northwind.Background.Workers\Northwind.Background.Workers.csproj", "{D32301B1-F8DB-4BF1-8C8E-A55D40C307B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Background.Hangfire", "Chapter09\Northwind.Background.Hangfire\Northwind.Background.Hangfire.csproj", "{16F70D9C-D43C-488B-BA8D-02C4BC889173}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter10", "Chapter10", "{E0D1B9ED-209A-4D60-8D6C-96AE2E511C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCrontab.Console", "Chapter10\NCrontab.Console\NCrontab.Console.csproj", "{F5C28C56-B481-4585-9A48-EBC0772B3A87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.AzureFunctions.Service", "Chapter10\Northwind.AzureFunctions.Service\Northwind.AzureFunctions.Service.csproj", "{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -239,6 +246,14 @@ Global
 		{16F70D9C-D43C-488B-BA8D-02C4BC889173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16F70D9C-D43C-488B-BA8D-02C4BC889173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16F70D9C-D43C-488B-BA8D-02C4BC889173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C28C56-B481-4585-9A48-EBC0772B3A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C28C56-B481-4585-9A48-EBC0772B3A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C28C56-B481-4585-9A48-EBC0772B3A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C28C56-B481-4585-9A48-EBC0772B3A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -275,6 +290,8 @@ Global
 		{B9888F47-E86C-4D83-A3C8-DBEEF313C304} = {72A3BD37-5E62-4B47-8A1A-042BA9EC7A98}
 		{D32301B1-F8DB-4BF1-8C8E-A55D40C307B0} = {72A3BD37-5E62-4B47-8A1A-042BA9EC7A98}
 		{16F70D9C-D43C-488B-BA8D-02C4BC889173} = {72A3BD37-5E62-4B47-8A1A-042BA9EC7A98}
+		{F5C28C56-B481-4585-9A48-EBC0772B3A87} = {E0D1B9ED-209A-4D60-8D6C-96AE2E511C36}
+		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C} = {E0D1B9ED-209A-4D60-8D6C-96AE2E511C36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
