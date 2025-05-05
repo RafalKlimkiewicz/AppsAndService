@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.Text;
+
+using Humanizer;
+
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Humanizer;
-using Azure.Core;
-using System.Text;
 
 namespace Northwind.AzureFunctions.Service
 {

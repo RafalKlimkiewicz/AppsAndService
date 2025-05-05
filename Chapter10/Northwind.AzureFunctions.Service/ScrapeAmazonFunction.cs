@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging; // To use ILogger.
 
 using System.IO.Compression; // To use GZipStream, CompressionMode.
+
 namespace Northwind.AzureFunctions.Service;
+
 public class ScrapeAmazonFunction
 {
     private const string relativePath = "12-NET-Cross-Platform-Development-Fundamentals/dp/1837635870/";
