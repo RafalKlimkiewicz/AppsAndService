@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 
 using Microsoft.Azure.Functions.Worker;
@@ -19,7 +20,12 @@ var host = new HostBuilder().ConfigureFunctionsWebApplication().ConfigureFunctio
             options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 0.8));
             options.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue("en-US"));
             options.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue("en", 0.8));
+            options.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            //options.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
             options.DefaultRequestHeaders.UserAgent.Add(new(productName: "Chrome", productVersion: "114.0.5735.91"));
+        }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+        {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         });
     })
     .Build();

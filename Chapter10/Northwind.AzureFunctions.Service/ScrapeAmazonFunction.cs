@@ -32,17 +32,35 @@ public class ScrapeAmazonFunction
         {
             _logger.LogInformation("Successful HTTP request.");
             // Read the content from a GZIP stream into a string.
-            Stream stream = await response.Content.ReadAsStreamAsync();
-            GZipStream gzipStream = new(stream, CompressionMode.Decompress);
+            Stream gzipStream = await response.Content.ReadAsStreamAsync();
+
+            //no need due to   AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            //if (response.Content.Headers.ContentEncoding.Contains("gzip"))
+            //{
+            //    _logger.LogInformation("Response is gzip-encoded.");
+            //    gzipStream = new GZipStream(gzipStream, CompressionMode.Decompress);
+            //}
+            //else
+            //{
+            //    _logger.LogInformation("Response is plain (not gzip).");
+            //}
+
             StreamReader reader = new(gzipStream);
             string page = reader.ReadToEnd();
 
             // Extract the Best Sellers Rank.
             int posBsr = page.IndexOf("Best Sellers Rank");
-            string bsrSection = page.Substring(posBsr, 45);
+
+            if (posBsr == -1)
+            {
+                _logger.LogWarning("not found 'Best Sellers Rank' on page");
+                return;
+            }
+
+            string bsrSection = page.Substring(posBsr, Math.Min(45, page.Length - posBsr));
 
             // bsrSection will be something like:
-            //   "Best Sellers Rank: </span> #22,258 in Books ("
+            // "Best Sellers Rank: </span> #22,258 in Books ("
             // Get the position of the # and the following space.
             int posHash = bsrSection.IndexOf("#") + 1;
             int posSpaceAfterHash = bsrSection.IndexOf(" ", posHash);
