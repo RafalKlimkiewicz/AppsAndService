@@ -100,6 +100,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCrontab.Console", "Chapter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.AzureFunctions.Service", "Chapter10\Northwind.AzureFunctions.Service\Northwind.AzureFunctions.Service.csproj", "{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter11", "Chapter11", "{E4794385-6A6D-4CF1-83B0-EA83A76E26CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common", "Chapter11\Northwind.Common\Northwind.Common.csproj", "{10633D2E-B243-4B85-8038-EE3C7D7F8925}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.SignalR.Service.Client.Mvc", "Chapter11\Northwind.SignalR.Service.Client.Mvc\Northwind.SignalR.Service.Client.Mvc.csproj", "{27983C52-9A71-4DDE-8405-0D35E3AEBA9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.SignalR.Client.Console", "Chapter11\Northwind.SignalR.Client.Console\Northwind.SignalR.Client.Console.csproj", "{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.SignalR.Client.Console.Streams", "Chapter11\Northwind.SignalR.Client.Console.Streams\Northwind.SignalR.Client.Console.Streams.csproj", "{7874D2BE-061F-4FFD-89EF-B7CACFD866FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +264,22 @@ Global
 		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10633D2E-B243-4B85-8038-EE3C7D7F8925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10633D2E-B243-4B85-8038-EE3C7D7F8925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10633D2E-B243-4B85-8038-EE3C7D7F8925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10633D2E-B243-4B85-8038-EE3C7D7F8925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27983C52-9A71-4DDE-8405-0D35E3AEBA9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27983C52-9A71-4DDE-8405-0D35E3AEBA9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27983C52-9A71-4DDE-8405-0D35E3AEBA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27983C52-9A71-4DDE-8405-0D35E3AEBA9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7874D2BE-061F-4FFD-89EF-B7CACFD866FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7874D2BE-061F-4FFD-89EF-B7CACFD866FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7874D2BE-061F-4FFD-89EF-B7CACFD866FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7874D2BE-061F-4FFD-89EF-B7CACFD866FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -292,6 +318,10 @@ Global
 		{16F70D9C-D43C-488B-BA8D-02C4BC889173} = {72A3BD37-5E62-4B47-8A1A-042BA9EC7A98}
 		{F5C28C56-B481-4585-9A48-EBC0772B3A87} = {E0D1B9ED-209A-4D60-8D6C-96AE2E511C36}
 		{DBE55FBF-959B-4CB8-AFC8-3D35EAB48D4C} = {E0D1B9ED-209A-4D60-8D6C-96AE2E511C36}
+		{10633D2E-B243-4B85-8038-EE3C7D7F8925} = {E4794385-6A6D-4CF1-83B0-EA83A76E26CF}
+		{27983C52-9A71-4DDE-8405-0D35E3AEBA9D} = {E4794385-6A6D-4CF1-83B0-EA83A76E26CF}
+		{C5AD296E-E0D4-4107-B0CA-FC39B1C38D06} = {E4794385-6A6D-4CF1-83B0-EA83A76E26CF}
+		{7874D2BE-061F-4FFD-89EF-B7CACFD866FE} = {E4794385-6A6D-4CF1-83B0-EA83A76E26CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32A123D0-E673-4CD1-84CB-10E43B63FC76}
